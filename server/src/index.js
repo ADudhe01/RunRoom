@@ -15,7 +15,25 @@ const __dirname = dirname(__filename);
 
 const app = express();
 
-app.use(cors({ origin: 'http://localhost:5173', credentials: true })); // adjust if needed
+// CORS configuration - allow both local dev and GitHub Pages
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://adudhe01.github.io',
+  process.env.FRONTEND_URL
+].filter(Boolean);
+
+app.use(cors({ 
+  origin: (origin, callback) => {
+    // Allow requests with no origin (mobile apps, Postman, etc.)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.some(allowed => origin.startsWith(allowed))) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true 
+}));
 app.use(express.json());
 
 // Serve uploaded files statically
