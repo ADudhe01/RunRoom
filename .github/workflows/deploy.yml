@@ -41,6 +41,7 @@ jobs:
           cd client
           npm run build
         env:
+          NODE_ENV: production
           VITE_API_URL: ${{ secrets.VITE_API_URL || 'http://localhost:4000/api' }}
       
       - name: Setup Pages
