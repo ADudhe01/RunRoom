@@ -28,7 +28,8 @@ dist/
 build/
 *.tsbuildinfo
 
-# Large 3D model files (use Git LFS or host separately)
-*.glb
-*.gltf
+# Large 3D model files - Git LFS will handle these
+# Remove *.glb and *.gltf from here if using Git LFS
+# *.glb
+# *.gltf
 
