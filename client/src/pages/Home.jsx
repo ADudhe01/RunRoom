@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 import PointsCounter from "../components/PointsCounter";
 import SyncButton from "../components/SyncButton";
+import { getServerBaseUrl } from "../services/api";
 import { motion } from "framer-motion";
 
 // Default profile picture generator
@@ -18,7 +19,7 @@ export default function Home() {
   const getProfilePictureUrl = () => {
     if (!user?.profilePicture) return getDefaultAvatar(user?.name);
     if (user.profilePicture.startsWith('http')) return user.profilePicture;
-    return `http://localhost:4000${user.profilePicture}`;
+    return `${getServerBaseUrl()}${user.profilePicture}`;
   };
   
   const profilePicture = getProfilePictureUrl();

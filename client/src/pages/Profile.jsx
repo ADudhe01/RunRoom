@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { api } from "../services/api";
+import { api, getServerBaseUrl } from "../services/api";
 import { useUser } from "../context/UserContext";
 import StatusBanner from "../components/StatusBanner";
 import { motion } from "framer-motion";
@@ -16,7 +16,7 @@ function ProfilePictureEditor({ user, setUser, setAlert }) {
   const [profilePictureFile, setProfilePictureFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(
     user?.profilePicture 
-      ? (user.profilePicture.startsWith('http') ? user.profilePicture : `http://localhost:4000${user.profilePicture}`)
+      ? (user.profilePicture.startsWith('http') ? user.profilePicture : `${getServerBaseUrl()}${user.profilePicture}`)
       : getDefaultAvatar(user?.name)
   );
   const [saving, setSaving] = useState(false);
@@ -64,7 +64,7 @@ function ProfilePictureEditor({ user, setUser, setAlert }) {
         formData.append('profilePicture', profilePictureFile);
       }
 
-      const res = await fetch('http://localhost:4000/api/user/update-profile-picture', {
+      const res = await fetch(`${getServerBaseUrl()}/api/user/update-profile-picture`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -94,7 +94,7 @@ function ProfilePictureEditor({ user, setUser, setAlert }) {
       if (data.user.profilePicture) {
         const newUrl = data.user.profilePicture.startsWith('http') 
           ? data.user.profilePicture 
-          : `http://localhost:4000${data.user.profilePicture}`;
+          : `${getServerBaseUrl()}${data.user.profilePicture}`;
         setPreviewUrl(newUrl);
       } else {
         setPreviewUrl(getDefaultAvatar(user?.name));
@@ -115,7 +115,7 @@ function ProfilePictureEditor({ user, setUser, setAlert }) {
     try {
       setSaving(true);
       
-      const res = await fetch('http://localhost:4000/api/user/update-profile-picture', {
+      const res = await fetch(`${getServerBaseUrl()}/api/user/update-profile-picture`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -317,7 +317,7 @@ export default function Profile() {
     });
 
     const encoded = encodeURIComponent(token);
-    window.location.href = `http://localhost:4000/api/strava/connect?state=${encoded}`;
+    window.location.href = `${getServerBaseUrl()}/api/strava/connect?state=${encoded}`;
   }
 
   if (!user) {
@@ -379,7 +379,7 @@ export default function Profile() {
   const getProfilePictureUrl = () => {
     if (!user?.profilePicture) return getDefaultAvatar(user?.name);
     if (user.profilePicture.startsWith('http')) return user.profilePicture;
-    return `http://localhost:4000${user.profilePicture}`;
+    return `${getServerBaseUrl()}${user.profilePicture}`;
   };
 
   return (

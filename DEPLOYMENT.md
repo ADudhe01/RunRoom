@@ -132,3 +132,5 @@ After deployment, update these:
 - Backend: `https://your-backend.railway.app` (or your hosting URL)
 - Update `VITE_API_URL` to point to your backend
 
+
+

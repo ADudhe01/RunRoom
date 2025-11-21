@@ -1,5 +1,12 @@
 const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000/api';
 
+// Get base server URL without /api suffix (for profile pictures, Strava redirects, etc.)
+export function getServerBaseUrl() {
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:4000/api';
+  // Remove /api from the end if present
+  return apiUrl.replace(/\/api\/?$/, '') || 'http://localhost:4000';
+}
+
 function getToken() {
   return localStorage.getItem('token');
 }

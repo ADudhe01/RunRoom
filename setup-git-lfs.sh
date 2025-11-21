@@ -37,3 +37,5 @@ echo "💡 Tip: Compress models first to reduce size:"
 echo "   npm install -g gltf-pipeline"
 echo "   gltf-pipeline -i model.glb -o model-compressed.glb --draco.compressionLevel 10"
 
+
+

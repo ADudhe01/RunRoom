@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import StatusBanner from "../components/StatusBanner";
-import { api } from "../services/api";
+import { api, getServerBaseUrl } from "../services/api";
 import { useUser } from "../context/UserContext";
 
 export default function Register() {
@@ -45,7 +45,7 @@ export default function Register() {
         formData.append('profilePicture', profilePictureFile);
       }
 
-      const res = await fetch('http://localhost:4000/api/auth/register', {
+      const res = await fetch(`${getServerBaseUrl()}/api/auth/register`, {
         method: 'POST',
         body: formData,
       });
