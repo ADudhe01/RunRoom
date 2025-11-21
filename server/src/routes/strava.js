@@ -10,12 +10,13 @@ import {
 import { User } from "../models/User.js";
 
 const router = express.Router();
-const PROFILE_REDIRECT = "http://localhost:5173/profile";
+const PROFILE_REDIRECT = process.env.FRONTEND_URL || "http://localhost:5173";
 
 function redirectWithStatus(res, status, reason) {
+  const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
   const params = new URLSearchParams({ strava: status });
   if (reason) params.append("reason", reason);
-  return res.redirect(`${PROFILE_REDIRECT}?${params.toString()}`);
+  return res.redirect(`${frontendUrl}/profile?${params.toString()}`);
 }
 
 /**
