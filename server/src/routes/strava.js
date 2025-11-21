@@ -13,7 +13,14 @@ const router = express.Router();
 const PROFILE_REDIRECT = process.env.FRONTEND_URL || "http://localhost:5173";
 
 function redirectWithStatus(res, status, reason) {
-  const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
+  let frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
+  
+  // Ensure GitHub Pages base path is included for production
+  // If FRONTEND_URL is https://adudhe01.github.io, add /RunRoom
+  if (frontendUrl.includes('github.io') && !frontendUrl.includes('/RunRoom')) {
+    frontendUrl = `${frontendUrl}/RunRoom`;
+  }
+  
   const params = new URLSearchParams({ strava: status });
   if (reason) params.append("reason", reason);
   return res.redirect(`${frontendUrl}/profile?${params.toString()}`);

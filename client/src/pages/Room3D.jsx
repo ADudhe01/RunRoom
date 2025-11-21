@@ -129,6 +129,7 @@ function RoomItem({ placement, isSelected, onSelect, onTransform, transformMode 
 
   const handleClick = (e) => {
     e.stopPropagation();
+    // Force immediate selection update
     onSelect(placement.id);
   };
 
@@ -206,7 +207,7 @@ function RoomItem({ placement, isSelected, onSelect, onTransform, transformMode 
       </group>
       {isSelected && groupRef.current && (
         <TransformControls
-          key={`controls-${placement.id}-${transformMode}`}
+          key={`controls-${placement.id}-${transformMode}-${isSelected}`}
           ref={controlsRef}
           mode={transformMode}
           object={groupRef.current}

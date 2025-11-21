@@ -44,6 +44,11 @@ jobs:
           NODE_ENV: production
           VITE_API_URL: ${{ secrets.VITE_API_URL || 'http://localhost:4000/api' }}
       
+      - name: Copy index.html to 404.html for GitHub Pages SPA routing
+        run: |
+          cd client/dist
+          cp index.html 404.html
+      
       - name: Setup Pages
         uses: actions/configure-pages@v4
       

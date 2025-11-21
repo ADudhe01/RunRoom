@@ -78,8 +78,11 @@ function AnimatedRoutes() {
 }
 
 export default function App() {
+  // Use basename for GitHub Pages deployment
+  const basename = import.meta.env.PROD ? '/RunRoom' : '';
+  
   return (
-    <Router>
+    <Router basename={basename}>
       <div className="app-root">
         <Navbar />
         <main className="app-main">
